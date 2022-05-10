@@ -1,0 +1,48 @@
+Ideas
+
+// Name for ducking and aligning module: Convergence, Alignity
+// Change Helmholtz~ to use the combined TD/FD algorithm
+// or, in modules built for one another
+// Helmholtz~ output full spectrum - actual normalization etc can move into own module?
+// Signal cleanup module - something like autocorrelation but channels against one another. Correlation(s1, s2), correlations(s2, s1) ?? discriminate~. We have two signals, we want to clean up both (or all three, four ...). In the end, perhaps we want to move sound between the channels, or we just want to delete some (probably delete). Ask stackexchange, do tests. Can probably come up with ineffective algorithm myself. Continuous benchmarking by longer timeframe fft?
+
+s1 = sReal1 + r1*sReal2
+s2 = sReal2 + r2*sReal1
+
+sReal1 ~= s1
+sReal2 ~= s2
+want to maximize r1 and r2 while keeping sReal1 and sReal2 as close to s1 and s2 as possible/ Can we create some measure for this?
+
+We also know that the stronger s1 is v s2, the more of s1 will be in s2, so volume ratio may be important
+
+Can use s1 as ansatz for sReal1 and s2 for sReal2, maximize r1, r2 and then repeat until sufficient purity
+
+s1 = sReal1 + r1*(sReal2 - C2)
+s2 = sReal2 + r2*(sReal1 - C1)
+///
+
+s1 = sReal1 + r1*s2 = sReal1 + r1*(sReal2 + r2*sReal1)
+
+
+///
+Alt approach:
+Removing c1*s1 from s2 such that c1 is maximized is something like using s1 as a partial base for s2? (and the opposite)
+This is starting to sound like LinAlg. Fourier coefficients can be used like linalg, because ON base - however - latency.
+///
+If we do one round of describing s1 in terms of s2 and s2 in terms of s1, can we work with the residues somehow? What remains must be ""unique"" to s1 and s2 in some sense.
+///
+s1 = residue1 + s2*k1 (maximize k)
+s2 = s2
+---
+s1 = residue1
+s2 = (1+k1)s2
+---
+s2 = (1+k1)*s2 = s1*k2 + residue2
+etc etc
+iteratively "steal" as much as possible from the other signal? Could end up in some deadlock? This is worth thinking about. If deadlocked in the end maybe split the difference.. idk
+///
+https://dsp.stackexchange.com/questions/28636/how-to-subtract-one-signal-from-another
+Seems like about the correct methodology - it uses corrolation for getting "k" 0 maybe I had wrong idea about "maximizing k" - what I'm looking for is decreasing the corrolation. Answer mentions it only works if the signals are statistically uncorrolated, which we can't guarantee. We may use volume ratio as a heuristic here. Or, we do the static calibration thing, as it will probably be good enough - then we know the opposite - it's supposed to be full corrolation
+///
+Alternative
+Simply listen when silence on one -> see how freq on string maps to freqs on other string, construct filter, continuously update this filter and remove mapped(s1) from s2 with coeff gotten from benchmarks

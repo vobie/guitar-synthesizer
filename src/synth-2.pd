@@ -1,0 +1,331 @@
+#N canvas 1533 38 374 1117 10;
+#X msg 672 82 \; pd dsp 1;
+#X msg 672 124 \; pd dsp 0;
+#X obj 672 56 loadbang;
+#X obj 574 202 adc~;
+#N canvas 1533 38 374 1117 scope 0;
+#X obj 38 21 inlet~;
+#X obj 139 131 sel 0;
+#X msg 139 48 1;
+#X obj 139 77 +;
+#X obj 92 326 tabwrite~ \$0-snac;
+#X obj 139 293 delay;
+#X obj 349 133 samplerate~;
+#X obj 349 84 loadbang;
+#X obj 359 112 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000;
+#X obj 349 157 t b f;
+#X obj 349 206 /;
+#X msg 349 182 1;
+#X obj 238 223 *;
+#X floatatom 238 256 10 0 0 0 - - - 0;
+#X obj 166 268 * 1000;
+#X obj 238 195 - 32;
+#X obj 238 24 r \$0-framesize;
+#X obj 257 147 loadbang;
+#X msg 257 54 resize \$1;
+#X obj 257 109 s \$0-snac;
+#X obj 265 82 s \$0-signal;
+#X obj 92 22 inlet~;
+#X obj 38 350 tabwrite~ \$0-signal;
+#X obj 139 22 inlet;
+#N canvas 71 301 316 324 pointer 0;
+#X obj 36 20 inlet;
+#X obj 166 22 inlet;
+#X obj 101 21 inlet;
+#X obj 86 76 f;
+#X obj 166 99 samplerate~;
+#X obj 166 130 /;
+#X floatatom 166 158 5 0 0 0 - - - 0;
+#X obj 86 171 /;
+#X obj 166 73 t b f;
+#X obj 86 147 f;
+#X obj 86 99 t b f;
+#X obj 224 21 loadbang;
+#X msg 224 49 1024;
+#X obj 86 262 s \$0-pitchcanvas;
+#X obj 86 207 * 400;
+#X msg 86 235 vis_size \$1 20;
+#X connect 0 0 3 0;
+#X connect 1 0 8 0;
+#X connect 2 0 3 1;
+#X connect 3 0 10 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 5 0 9 1;
+#X connect 7 0 14 0;
+#X connect 8 0 4 0;
+#X connect 8 1 5 1;
+#X connect 9 0 7 0;
+#X connect 10 0 9 0;
+#X connect 10 1 7 1;
+#X connect 11 0 12 0;
+#X connect 12 0 8 0;
+#X connect 14 0 15 0;
+#X connect 15 0 13 0;
+#X restore 162 209 pd pointer;
+#X msg 257 171 1024;
+#X obj 139 105 & 7;
+#X obj 38 190 z~ 2048 1024;
+#X connect 0 0 27 0;
+#X connect 1 0 5 0;
+#X connect 2 0 3 0;
+#X connect 3 0 26 0;
+#X connect 5 0 4 0;
+#X connect 5 0 22 0;
+#X connect 5 0 24 0;
+#X connect 6 0 9 0;
+#X connect 7 0 6 0;
+#X connect 8 0 6 0;
+#X connect 9 0 11 0;
+#X connect 9 1 10 1;
+#X connect 10 0 12 1;
+#X connect 11 0 10 0;
+#X connect 12 0 13 0;
+#X connect 12 0 14 0;
+#X connect 14 0 5 1;
+#X connect 15 0 12 0;
+#X connect 16 0 18 0;
+#X connect 16 0 15 0;
+#X connect 16 0 24 2;
+#X connect 16 0 27 1;
+#X connect 17 0 25 0;
+#X connect 18 0 19 0;
+#X connect 18 0 20 0;
+#X connect 21 0 4 0;
+#X connect 23 0 2 0;
+#X connect 23 0 24 1;
+#X connect 25 0 15 0;
+#X connect 26 0 3 1;
+#X connect 26 0 1 0;
+#X connect 27 0 22 0;
+#X restore 663 391 pd scope;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-signal 512 float 0;
+#X coords 0 1 511 -1 400 140 1;
+#X restore 983 192 graph;
+#X floatatom 785 411 5 0 0 0 - - - 0;
+#X floatatom 784 386 5 0 0 0 - - - 0;
+#X text 822 386 fidelity;
+#N canvas 1438 38 469 1117 user-parameters 0;
+#X obj 45 167 vradio 15 1 1 4 empty empty empty 0 -8 0 10 #fcfcfc #fc8000
+#000000 0;
+#N canvas 0 22 167 265 overlap 0;
+#X obj 29 35 inlet;
+#X obj 29 195 outlet;
+#X obj 29 130 pow;
+#X obj 29 70 t b f;
+#X msg 29 102 2;
+#X msg 29 162 overlap \$1;
+#X connect 0 0 3 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 3 1 2 1;
+#X connect 4 0 2 0;
+#X connect 5 0 1 0;
+#X restore 45 238 pd overlap;
+#N canvas 777 314 284 292 framesize 0;
+#X obj 29 14 inlet;
+#X obj 29 242 outlet;
+#X obj 29 119 pow;
+#X obj 29 64 t b f;
+#X msg 29 91 2;
+#X msg 29 198 framesize \$1;
+#X obj 43 173 s \$0-framesize;
+#X floatatom 53 144 5 0 0 0 - - - 0;
+#X obj 159 163 samplerate~;
+#X obj 159 136 t b f;
+#X obj 159 191 /;
+#X obj 159 245 outlet;
+#X obj 159 219 * 1.2;
+#X obj 29 41 + 7;
+#X connect 0 0 13 0;
+#X connect 2 0 5 0;
+#X connect 2 0 6 0;
+#X connect 2 0 7 0;
+#X connect 2 0 9 0;
+#X connect 3 0 4 0;
+#X connect 3 1 2 1;
+#X connect 4 0 2 0;
+#X connect 5 0 1 0;
+#X connect 8 0 10 0;
+#X connect 9 0 8 0;
+#X connect 9 1 10 1;
+#X connect 10 0 12 0;
+#X connect 12 0 11 0;
+#X connect 13 0 3 0;
+#X restore 29 88 pd framesize;
+#X obj 29 4 vradio 15 1 1 5 empty empty empty 0 -8 0 10 #fcfcfc #fc8000
+#000000 2;
+#X text 50 19 256;
+#X text 50 35 512;
+#X text 49 65 2048;
+#X text 67 182 2;
+#X text 67 214 8;
+#X text 67 199 4;
+#X obj 29 607 outlet;
+#X floatatom 98 118 5 0 0 0 - - - 0;
+#X text 49 50 1024 (default);
+#X text 67 166 1 (default);
+#X text 292 84 Overlapping analysis frames can be used for a finer
+rate of pitch messages. This may be useful in the case of longer analysis
+frames. Note that overlap multiplies the object's CPU load.;
+#X msg 124 423 bias \$1;
+#X obj 127 397 hsl 100 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#fc8000 #000000 0 0;
+#X floatatom 182 423 5 0 0 0 - - - 0;
+#X text 287 382 Bias (range 0 - 1) is used to favour the first peaks
+found in the SNAC function. If bias is set to a higher level \, you
+are more likely to experience upper octave jumps. If bias is set to
+a low level \, low octave jumps are more likely to happen. Set bias
+according to your input material. For example \, for a sound type with
+weak fundamental \, bias is better not set too high. Default is 0.2.
+;
+#X obj 126 476 hsl 100 15 0 1 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#fc8000 #000000 0 0;
+#X floatatom 201 506 5 0 0 0 - - - 0;
+#X msg 123 506 fidelity \$1;
+#X text 287 489 Fidelity (range 0 - 1 ) determines the fidelity threshold
+required for new pitch information to get through. Fidelity is an indication
+of how periodic a sound is (as opposed to noisy \, not periodic). Default
+is 0.95.;
+#X text 292 -9 Analysis framesize determines the lowest pitch which
+can be detected \, corresponding to a period ~1.2 times the framesize.
+Framesize also determines latency of the pitch info. Note that reported
+pitch is the average pitch of an analysis frame. Framesize is always
+a power of two \, because FFT is used for efficiency.;
+#X text 93 138 lowest detectable pitch (Hz);
+#X obj 127 562 hsl 100 15 0 2000 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#fc8000 #000000 0 0;
+#X floatatom 199 591 5 0 0 0 - - - 0;
+#X msg 124 590 maxfreq \$1;
+#X text 288 560 Maxfreq is the maximum frequency which will possibly
+be reported by [helmholtz~]. Default is 2000 Set it lower if you experience
+harmonic interference components such as from cellphones.;
+#X text 50 2 128;
+#X text 293 188 1 - analysis frame size (128 \, 256 \, 512 \, 1024
+or 2048);
+#X text 293 210 2 - overlap (1 \, 2 \, 4 or 8);
+#X text 292 161 Optional initialisation arguments are:;
+#X obj 142 119 outlet;
+#X msg 124 372 0.2;
+#X msg 123 452 0.95;
+#X msg 124 540 1000;
+#X obj 61 276 loadbang;
+#X obj 127 318 hsl 100 15 0 100 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#fc8000 #000000 0 0;
+#X floatatom 182 344 5 0 0 0 - - - 0;
+#X msg 124 344 sens \$1;
+#X msg 124 293 50;
+#X text 288 305 Sens (sensitivity) determines a minimum sound level
+where [helmholtz~] is sensitive for pitch. If your input sound has
+a lot of artifacts (hum \, interference \, colored noise) \, set sens
+to a higher dB level. Default is 50 dB (pd deciBels).;
+#X text 290 261 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+;
+#X connect 0 0 1 0;
+#X connect 1 0 10 0;
+#X connect 2 0 10 0;
+#X connect 2 1 11 0;
+#X connect 2 1 33 0;
+#X connect 3 0 2 0;
+#X connect 15 0 10 0;
+#X connect 16 0 15 0;
+#X connect 16 0 17 0;
+#X connect 19 0 21 0;
+#X connect 19 0 20 0;
+#X connect 21 0 10 0;
+#X connect 25 0 27 0;
+#X connect 25 0 26 0;
+#X connect 27 0 10 0;
+#X connect 34 0 16 0;
+#X connect 35 0 19 0;
+#X connect 36 0 25 0;
+#X connect 37 0 34 0;
+#X connect 37 0 35 0;
+#X connect 37 0 36 0;
+#X connect 37 0 41 0;
+#X connect 38 0 40 0;
+#X connect 38 0 39 0;
+#X connect 40 0 10 0;
+#X connect 41 0 38 0;
+#X restore 789 239 pd user-parameters;
+#X obj 1323 364 cnv 15 59 138 empty empty empty 20 12 0 14 #b8b8b8
+#404040 0;
+#X text 982 707 Katja Vetter Feb 2012;
+#X text 981 515 [helmholtz~] is a pitch tracker using the SNAC (Specially
+Normalized AutoCorrelation) function developed by Philip McLeod.;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-snac 512 float 0;
+#X coords 0 1 511 -1 400 140 1;
+#X restore 983 363 graph;
+#X obj 984 424 cnv 15 203 20 empty \$0-pitchcanvas empty 20 12 0 14
+#fc8000 #404040 0;
+#X obj 685 359 helmholtz~ 1024 1;
+#X text 822 411 pitch;
+#X text 981 565 The input signal is in the upper plot \, and the lower
+plot shows the SNAC function derived from the signal. [helmholtz~]
+tries to pick the principal peak from the SNAC function \, indicating
+period length (orange bar) \, from which the fundamental frequency
+is computed.;
+#X text 570 183 soundcard;
+#X text 981 642 In this patch \, [helmholtz~] finds pitch from soundcard
+input and controls an [osc~] frequency \, so you can judge the pitch
+estimator's quality by ear.;
+#X floatatom 883 283 5 0 0 0 - - - 0;
+#X obj 519 834 dac~;
+#X obj 894 100 lop~;
+#X floatatom 921 35 5 0 3000 0 - - - 0;
+#X obj 549 644 *~;
+#X obj 806 464 phasor~;
+#X floatatom 366 462 7 0 0 0 - - - 0;
+#X text 954 46 investigate filters \, lopass may not be be good in
+this case \, consider mount position. In the end \, will use several
+FFT coupled with helmholtz It may be good for trailing tones and to
+cross check;
+#X obj 368 335 env~;
+#X msg 773 754 print;
+#X msg 754 700 start;
+#X msg 761 728 stop;
+#X msg 714 621 open /tmp/foo.wav;
+#X obj 746 821 writesf~ 1, f 15;
+#X msg 138 613 print;
+#X msg 119 559 start;
+#X msg 126 587 stop;
+#X msg 79 480 open /tmp/foo.wav;
+#X obj 111 680 readsf~, f 15;
+#X obj 544 292 vsl 15 128 0 100 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X floatatom 367 401 7 0 0 0 - - - 0;
+#X text 309 404 volume;
+#X text 94 351 volume prob in dB \, can't just divide? investigate
+volume more;
+#X obj 367 432 expr ($f1 - 44) * 0.001 * ($f2 / 100);
+#X connect 2 0 0 0;
+#X connect 3 1 15 0;
+#X connect 3 1 28 0;
+#X connect 6 0 25 0;
+#X connect 9 0 15 0;
+#X connect 9 1 20 0;
+#X connect 15 0 4 1;
+#X connect 15 1 6 0;
+#X connect 15 1 4 2;
+#X connect 15 2 7 0;
+#X connect 23 0 22 1;
+#X connect 24 0 21 1;
+#X connect 24 0 33 0;
+#X connect 25 0 24 1;
+#X connect 26 0 24 0;
+#X connect 28 0 40 0;
+#X connect 29 0 33 0;
+#X connect 30 0 33 0;
+#X connect 31 0 33 0;
+#X connect 32 0 33 0;
+#X connect 34 0 38 0;
+#X connect 35 0 38 0;
+#X connect 36 0 38 0;
+#X connect 37 0 38 0;
+#X connect 38 0 21 1;
+#X connect 39 0 43 1;
+#X connect 40 0 43 0;
+#X connect 43 0 26 0;
