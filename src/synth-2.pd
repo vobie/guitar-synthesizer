@@ -1,9 +1,9 @@
-#N canvas 1533 38 374 1117 10;
+#N canvas 1279 38 628 1117 10;
 #X msg 672 82 \; pd dsp 1;
 #X msg 672 124 \; pd dsp 0;
 #X obj 672 56 loadbang;
 #X obj 574 202 adc~;
-#N canvas 1533 38 374 1117 scope 0;
+#N canvas 1438 38 469 1117 scope 0;
 #X obj 38 21 inlet~;
 #X obj 139 131 sel 0;
 #X msg 139 48 1;
@@ -29,7 +29,7 @@
 #X obj 92 22 inlet~;
 #X obj 38 350 tabwrite~ \$0-signal;
 #X obj 139 22 inlet;
-#N canvas 71 301 316 324 pointer 0;
+#N canvas 0 0 1920 1168 pointer 0;
 #X obj 36 20 inlet;
 #X obj 166 22 inlet;
 #X obj 101 21 inlet;
@@ -67,13 +67,14 @@
 #X msg 257 171 1024;
 #X obj 139 105 & 7;
 #X obj 38 190 z~ 2048 1024;
+#X obj 566 374 zexy;
 #X connect 0 0 27 0;
 #X connect 1 0 5 0;
 #X connect 2 0 3 0;
 #X connect 3 0 26 0;
-#X connect 5 0 4 0;
-#X connect 5 0 22 0;
 #X connect 5 0 24 0;
+#X connect 5 0 22 0;
+#X connect 5 0 4 0;
 #X connect 6 0 9 0;
 #X connect 7 0 6 0;
 #X connect 8 0 6 0;
@@ -102,12 +103,12 @@
 #X restore 663 391 pd scope;
 #N canvas 0 22 450 300 (subpatch) 0;
 #X array \$0-signal 512 float 0;
-#X coords 0 1 511 -1 400 140 1;
+#X coords 0 -0.1 511 0.1 400 140 1 0 0;
 #X restore 983 192 graph;
 #X floatatom 785 411 5 0 0 0 - - - 0;
 #X floatatom 784 386 5 0 0 0 - - - 0;
 #X text 822 386 fidelity;
-#N canvas 1438 38 469 1117 user-parameters 0;
+#N canvas 1533 38 374 1117 user-parameters 0;
 #X obj 45 167 vradio 15 1 1 4 empty empty empty 0 -8 0 10 #fcfcfc #fc8000
 #000000 0;
 #N canvas 0 22 167 265 overlap 0;
@@ -210,19 +211,19 @@ or 2048);
 #X obj 142 119 outlet;
 #X msg 124 372 0.2;
 #X msg 123 452 0.95;
-#X msg 124 540 1000;
 #X obj 61 276 loadbang;
 #X obj 127 318 hsl 100 15 0 100 0 0 empty empty empty -2 -8 0 10 #fcfcfc
 #fc8000 #000000 0 0;
 #X floatatom 182 344 5 0 0 0 - - - 0;
 #X msg 124 344 sens \$1;
-#X msg 124 293 50;
 #X text 288 305 Sens (sensitivity) determines a minimum sound level
 where [helmholtz~] is sensitive for pitch. If your input sound has
 a lot of artifacts (hum \, interference \, colored noise) \, set sens
 to a higher dB level. Default is 50 dB (pd deciBels).;
 #X text 290 261 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;
+#X msg 124 293 15;
+#X msg 124 540 1500;
 #X connect 0 0 1 0;
 #X connect 1 0 10 0;
 #X connect 2 0 10 0;
@@ -240,15 +241,15 @@ to a higher dB level. Default is 50 dB (pd deciBels).;
 #X connect 27 0 10 0;
 #X connect 34 0 16 0;
 #X connect 35 0 19 0;
-#X connect 36 0 25 0;
-#X connect 37 0 34 0;
-#X connect 37 0 35 0;
-#X connect 37 0 36 0;
-#X connect 37 0 41 0;
-#X connect 38 0 40 0;
-#X connect 38 0 39 0;
-#X connect 40 0 10 0;
-#X connect 41 0 38 0;
+#X connect 36 0 34 0;
+#X connect 36 0 35 0;
+#X connect 36 0 43 0;
+#X connect 36 0 42 0;
+#X connect 37 0 39 0;
+#X connect 37 0 38 0;
+#X connect 39 0 10 0;
+#X connect 42 0 37 0;
+#X connect 43 0 25 0;
 #X restore 789 239 pd user-parameters;
 #X obj 1323 364 cnv 15 59 138 empty empty empty 20 12 0 14 #b8b8b8
 #404040 0;
@@ -259,7 +260,7 @@ Normalized AutoCorrelation) function developed by Philip McLeod.;
 #X array \$0-snac 512 float 0;
 #X coords 0 1 511 -1 400 140 1;
 #X restore 983 363 graph;
-#X obj 984 424 cnv 15 203 20 empty \$0-pitchcanvas empty 20 12 0 14
+#X obj 984 424 cnv 15 118 20 empty \$0-pitchcanvas empty 20 12 0 14
 #fc8000 #404040 0;
 #X obj 685 359 helmholtz~ 1024 1;
 #X text 822 411 pitch;
@@ -294,16 +295,21 @@ cross check;
 #X msg 126 587 stop;
 #X msg 79 480 open /tmp/foo.wav;
 #X obj 111 680 readsf~, f 15;
-#X obj 544 292 vsl 15 128 0 100 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#X obj 498 309 vsl 15 128 1 100 0 0 empty empty empty 0 -9 0 10 #fcfcfc
 #000000 #000000 0 1;
 #X floatatom 367 401 7 0 0 0 - - - 0;
 #X text 309 404 volume;
 #X text 94 351 volume prob in dB \, can't just divide? investigate
 volume more;
-#X obj 367 432 expr ($f1 - 44) * 0.001 * ($f2 / 100);
+#X obj 271 172 vu 15 120 empty empty -1 -8 0 10 #404040 #000000 1 0
+;
+#X obj 366 432 dbtorms;
+#X obj 399 513 expr $f1 * 100 * $f2;
 #X connect 2 0 0 0;
 #X connect 3 1 15 0;
 #X connect 3 1 28 0;
+#X connect 3 1 4 0;
+#X connect 3 1 21 1;
 #X connect 6 0 25 0;
 #X connect 9 0 15 0;
 #X connect 9 1 20 0;
@@ -315,7 +321,7 @@ volume more;
 #X connect 24 0 21 1;
 #X connect 24 0 33 0;
 #X connect 25 0 24 1;
-#X connect 26 0 24 0;
+#X connect 26 0 45 0;
 #X connect 28 0 40 0;
 #X connect 29 0 33 0;
 #X connect 30 0 33 0;
@@ -326,6 +332,7 @@ volume more;
 #X connect 36 0 38 0;
 #X connect 37 0 38 0;
 #X connect 38 0 21 1;
-#X connect 39 0 43 1;
-#X connect 40 0 43 0;
-#X connect 43 0 26 0;
+#X connect 39 0 45 1;
+#X connect 40 0 44 0;
+#X connect 44 0 26 0;
+#X connect 45 0 24 0;
